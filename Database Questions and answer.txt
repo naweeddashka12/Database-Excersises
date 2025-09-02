@@ -1,0 +1,443 @@
+Question 1: Calculate Annual Salary
+Problem: A company wants to calculate the annual salary of an employee. Write a PL/SQL block that takes basic_salary and bonus as variables and prints the annual salary
+
+DECLARE
+    -- 1. Declare variables
+    v_basic_salary  NUMBER := 5000;   -- Example value, can be changed
+    v_bonus         NUMBER := 1000;   -- Example value, can be changed
+    v_annual_salary NUMBER;
+BEGIN
+    -- 2. Calculate the annual salary
+    -- Assuming annual salary is (12 * basic_salary) + bonus
+    v_annual_salary := (12 * v_basic_salary) + v_bonus;
+
+    -- 3. Display the result
+    DBMS_OUTPUT.PUT_LINE('Basic Monthly Salary: $' || v_basic_salary);
+    DBMS_OUTPUT.PUT_LINE('Annual Bonus: $' || v_bonus);
+    DBMS_OUTPUT.PUT_LINE('Total Annual Salary: $' || v_annual_salary);
+END;
+/
+________________________________________________________________________________________________________________________________________________________________________________--
+Question 2: Calculate Student Average Marks
+Problem: A university stores a student’s marks in 3 subjects. Write a PL/SQL block to calculate the average marks and display the result.
+
+DECLARE
+    -- 1. Declare variables for subject marks
+    v_subject1  NUMBER := 85; -- Example mark for Subject 1
+    v_subject2  NUMBER := 90; -- Example mark for Subject 2
+    v_subject3  NUMBER := 78; -- Example mark for Subject 3
+    
+    -- 2. Declare a variable to hold the calculated average
+    v_average   NUMBER;
+BEGIN
+    -- 3. Calculate the average of the three subjects
+    v_average := (v_subject1 + v_subject2 + v_subject3) / 3;
+
+    -- 4. Display the individual marks and the computed average
+    DBMS_OUTPUT.PUT_LINE('Marks in Subject 1: ' || v_subject1);
+    DBMS_OUTPUT.PUT_LINE('Marks in Subject 2: ' || v_subject2);
+    DBMS_OUTPUT.PUT_LINE('Marks in Subject 3: ' || v_subject3);
+    DBMS_OUTPUT.PUT_LINE('----------------------------');
+    DBMS_OUTPUT.PUT_LINE('Average Marks: ' || ROUND(v_average, 2)); -- Rounded to 2 decimal places
+END;
+/
+_____________________________________________________________________________________________________________________________________________________________________________________________-
+Question 3: Bank Balance Check (Using IF-ELSIF)
+Problem: A bank system stores a customer’s account balance.
+
+If balance < 1000 → print "Low Balance"
+
+If balance between 1000 and 5000 → print "Sufficient Balance"
+
+If balance > 5000 → print "High Balance"
+Write a PL/SQL block using IF-ELSIF.
+
+
+DECLARE
+    v_balance NUMBER := 3500; -- Example balance, change this value to test all conditions
+BEGIN
+    -- Check the balance against the specified conditions
+    IF v_balance < 1000 THEN
+        DBMS_OUTPUT.PUT_LINE('Low Balance');
+    ELSIF v_balance BETWEEN 1000 AND 5000 THEN
+        DBMS_OUTPUT.PUT_LINE('Sufficient Balance');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('High Balance');
+    END IF;
+END;
+/
+________________________________________________________________________________________________________________________________________________________________________________--
+Question 4: Student Grading System (Using CASE)
+Problem: A grading system accepts a student’s percentage.
+
+90–100 → "A Grade"
+
+75–89 → "B Grade"
+
+50–74 → "C Grade"
+
+Below 50 → "Fail"
+Write using a CASE statement.
+
+
+DECLARE
+    v_percentage NUMBER := 68; -- Example percentage, change to test different grades
+    v_grade      VARCHAR2(10);
+BEGIN
+    -- Use CASE to assign grade based on percentage
+    v_grade :=
+        CASE
+            WHEN v_percentage BETWEEN 90 AND 100 THEN 'A Grade'
+            WHEN v_percentage BETWEEN 75 AND 89  THEN 'B Grade'
+            WHEN v_percentage BETWEEN 50 AND 74  THEN 'C Grade'
+            ELSE 'Fail'
+        END;
+    
+    -- Display the result
+    DBMS_OUTPUT.PUT_LINE('Percentage: ' || v_percentage || '%');
+    DBMS_OUTPUT.PUT_LINE('Grade: ' || v_grade);
+END;
+/
+________________________________________________________________________________________________________________________________________________________________________________--
+Question 5: Shopping Store Discount Calculator
+Problem: A shopping store gives discounts:
+
+If the bill > 5000 → 20% discount
+
+If the bill between 2000 and 5000 → 10% discount
+
+Otherwise no discount
+Write a PL/SQL block to calculate final bill after discount.
+
+
+DECLARE
+    v_bill_amount    NUMBER := 3000; -- Example bill amount
+    v_discount_rate  NUMBER;
+    v_discount_amount NUMBER;
+    v_final_amount   NUMBER;
+BEGIN
+    -- Determine discount rate based on bill amount
+    IF v_bill_amount > 5000 THEN
+        v_discount_rate := 0.20; -- 20%
+    ELSIF v_bill_amount BETWEEN 2000 AND 5000 THEN
+        v_discount_rate := 0.10; -- 10%
+    ELSE
+        v_discount_rate := 0;    -- 0%
+    END IF;
+
+    -- Calculate discount amount and final bill
+    v_discount_amount := v_bill_amount * v_discount_rate;
+    v_final_amount := v_bill_amount - v_discount_amount;
+
+    -- Display the results
+    DBMS_OUTPUT.PUT_LINE('Original Bill Amount: $' || v_bill_amount);
+    DBMS_OUTPUT.PUT_LINE('Discount Rate: ' || (v_discount_rate * 100) || '%');
+    DBMS_OUTPUT.PUT_LINE('Discount Amount: $' || ROUND(v_discount_amount, 2));
+    DBMS_OUTPUT.PUT_LINE('Final Amount to Pay: $' || ROUND(v_final_amount, 2));
+END;
+/
+_________________________________________________________________________________________________________________________________________________________________________---
+Question 6: Multiplication Table (Using User Input)
+Problem: Write a PL/SQL block that prints the multiplication table of a number entered by the user (example: table of 7).
+
+
+
+DECLARE
+    v_num    NUMBER := &enter_number; -- Prompt user for input
+    v_result NUMBER;
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Multiplication Table of ' || v_num || ':');
+    DBMS_OUTPUT.PUT_LINE('-----------------------------');
+    
+    -- Loop from 1 to 10 to generate the table
+    FOR i IN 1..10 LOOP
+        v_result := v_num * i;
+        DBMS_OUTPUT.PUT_LINE(v_num || ' x ' || i || ' = ' || v_result);
+    END LOOP;
+END;
+/
+________________________________________________________________________________________________________________________________________________________________________________--
+Question 7: Print Employee IDs (Using FOR Loop)
+Problem: A company wants to print employee IDs from 100 to 120. Use a FOR LOOP to print them.
+
+
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Employee IDs from 100 to 120:');
+    DBMS_OUTPUT.PUT_LINE('------------------------------');
+    
+    -- FOR loop from 100 to 120
+    FOR emp_id IN 100..120 LOOP
+        DBMS_OUTPUT.PUT_LINE('Employee ID: ' || emp_id);
+    END LOOP;
+END;
+/
+_____________________________________________________________________________________________________________________________________________________________________________________________-
+
+Question 8: Factorial Calculation (Using WHILE Loop)
+Problem: Write a PL/SQL block to display the factorial of a given number using a WHILE loop.
+
+
+DECLARE
+    v_num      NUMBER := 5; -- Example: Change this value for different factorial
+    v_factorial NUMBER := 1;
+    v_counter   NUMBER := 1;
+BEGIN
+    -- Calculate factorial using WHILE loop
+    WHILE v_counter <= v_num LOOP
+        v_factorial := v_factorial * v_counter;
+        v_counter   := v_counter + 1;
+    END LOOP;
+    
+    -- Display the result
+    DBMS_OUTPUT.PUT_LINE('Factorial of ' || v_num || ' is: ' || v_factorial);
+END;
+/
+________________________________________________________________________________________________________________________________________________________________________________--
+Question 9: Countdown Timer (Using REVERSE FOR Loop)
+Problem: A countdown timer should print numbers from 10 down to 1 using a REVERSE FOR loop.
+
+
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Countdown from 10 to 1:');
+    DBMS_OUTPUT.PUT_LINE('-----------------------');
+    
+    -- REVERSE FOR loop: counts down from 10 to 1
+    FOR countdown IN REVERSE 1..10 LOOP
+        DBMS_OUTPUT.PUT_LINE('T-' || countdown);
+    END LOOP;
+    
+    DBMS_OUTPUT.PUT_LINE('Liftoff! 🚀');
+END;
+/
+_________________________________________________________________________________________________________________________________________________________________________---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
